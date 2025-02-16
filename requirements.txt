@@ -1,0 +1,7 @@
+numpy
+torch==2.4.1
+transformers==4.47
+tokenizers
+optimum
+accelerate
+mauve-text
