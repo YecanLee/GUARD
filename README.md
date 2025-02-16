@@ -1,9 +1,9 @@
-## Global Uncertainty-Driven Hyperparameter-Free Contrastive Search <br><sub>Official PyTorch Implementation</sub>
+## Global Uncertainty Aware Robust Decoding <br><sub>Official PyTorch Implementation</sub>
 ## [Paper](placeholder) | [Project Page](placeholder) | Run Analysis Baseline [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](placeholder)
 
-This repo contains the official implementation of our paper __"Global Uncertainty-Driven Hyperparameter-Free Contrastive Search"__. You can find more details in our [project page](placeholder) and our [paper](placeholder).
+This repo contains the official implementation of our paper __"Global Uncertainty Aware Robust Decoding"__. You can find more details in our [project page](placeholder) and our [paper](placeholder).
 
-> [**Global Uncertainty-Driven Hyperparameter-Free Contrastive Search**](placeholder)<br>
+> [**Global Uncertainty Aware Robust Decoding**](placeholder)<br>
 
 
 <p align="center">
@@ -13,7 +13,6 @@ This repo contains the official implementation of our paper __"Global Uncertaint
 
 ## 📅 Timeline
 - [2025/02/16] We have released the official code implementation of our paper 🤩.
-- [2025/02/16] First version of our paper is available on [arXiv](placeholder) now!
 
 
 ## 📖 Table of Contents <a href="#top">[Back to Top]</a>
