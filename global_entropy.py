@@ -4,16 +4,15 @@ import numpy as np
 
 
 def calculate_global_entropy(steps_entropy, decay_factor=0.95):
-    """计算全局熵，结合平均熵和衰减权重熵，使用 PyTorch 张量"""
-    # 确保 steps_entropy 是一个 PyTorch 张量
+    """Calculate global entropy with decay-weighted entropy"""
     if not isinstance(steps_entropy, torch.Tensor):
         steps_entropy = torch.tensor(steps_entropy, device='cuda')
 
-    # 计算衰减权重
+    # Calculate decay weight
     T = len(steps_entropy)
     decay_weights = torch.tensor([decay_factor ** (T - t - 1) for t in range(T)], device='cuda')
 
-    # 使用权重计算加权熵
+    # Calculate weighted entropy using weights
     weighted_entropy = torch.sum(decay_weights * steps_entropy) / torch.sum(decay_weights)
 
     global_entropy =  weighted_entropy
@@ -22,8 +21,8 @@ def calculate_global_entropy(steps_entropy, decay_factor=0.95):
 
 def dynamic_adjustment(global_entropy, step_entropy, max_entropy, sum_t, w=4):
 
-    """根据全局熵和当前局部熵动态调整候选词数量和退化惩罚权重"""
-    epsilon = 1e-4  # 防止数值溢出
+    """Dynamically adjust the number of candidate words and degradation penalty weights based on global entropy and current local entropy"""
+    epsilon = 1e-4  # Prevent numerical overflow.
 
     # 将输入转换为至少 1 维的 Tensor 并放置到 CUDA 上
     step_entropy = torch.tensor(step_entropy, device='cuda').clone().detach() if not isinstance(step_entropy,
