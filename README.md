@@ -1,18 +1,6 @@
 ## GUARD: Glocal Uncertainty-Aware Robust Decoding <br><sub>Official PyTorch Implementation</sub>
 ## [Paper](placeholder) | [Project Page](placeholder) | Run Analysis Baseline [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](placeholder)
 
-This repo contains the official implementation of our paper __"GUARD: Glocal Uncertainty-Aware Robust Decoding"__. You can find more details in our [project page](placeholder) and our [paper](placeholder).
-
-> [**GUARD: Glocal Uncertainty-Aware Robust Decoding**](placeholder)<br>
-
-
-<p align="center">
-  <img src="assets/cs_trend.jpeg" alt="Contrastive Search Trend">
-</p>
-
-
-## 📅 Timeline
-- [2025/02/16] We have released the official code implementation of our paper 🤩.
 
 
 ## 📖 Table of Contents <a href="#top">[Back to Top]</a>
