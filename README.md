@@ -1,5 +1,5 @@
 ## GUARD: Glocal Uncertainty-Aware Robust Decoding <br><sub>Official PyTorch Implementation</sub>
-## [Paper](placeholder) | [Project Page](placeholder) | Run Analysis Baseline [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](placeholder)
+## [Project Page](placeholder) | Run Analysis Baseline [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](placeholder)
 
 
 
