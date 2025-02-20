@@ -24,7 +24,7 @@ def dynamic_adjustment(global_entropy, step_entropy, max_entropy, sum_t, w=4):
     """Dynamically adjust the number of candidate words and degradation penalty weights based on global entropy and current local entropy"""
     epsilon = 1e-4  # Prevent numerical overflow.
 
-    # 将输入转换为至少 1 维的 Tensor 并放置到 CUDA 上
+    # Convert the input to a tensor of at least 1 dimension and place it on CUDA
     step_entropy = torch.tensor(step_entropy, device='cuda').clone().detach() if not isinstance(step_entropy,
                                                                                                 torch.Tensor) else step_entropy
     global_entropy = torch.tensor(global_entropy, device='cuda').clone().detach() if not isinstance(global_entropy,
@@ -37,35 +37,34 @@ def dynamic_adjustment(global_entropy, step_entropy, max_entropy, sum_t, w=4):
     median_entropy = torch.median(step_entropy) if len(step_entropy) > 0 else 0
 
     if sum_t < w:
-        # 使用第一个公式：δ_loc = q * arctanh((H(X)^t - median(H(X)^{<t})) / (max_entropy))
+        # Use the first formula: δ_loc = q * arctanh((H(X)^t - median(H(X)^{<t})) / (max_entropy))
         delta_t_raw = (step_entropy[-1] - median_entropy) / max_entropy
         delta_global_raw = 0  # δ_glob = 0
     else:
-        # 使用第二个公式：
-        # δ_loc = q * arctanh((H(X)^t - median(H(X)^{t-w:t-1})) / (max_entropy))
+        # Use the second formula: δ_loc = q * arctanh((H(X)^t - median(H(X)^{t-w:t-1})) / (max_entropy))
 
-        # 计算时间步t的局部熵差
-        local_entropy_window = step_entropy[sum_t - w:sum_t]  # 获取窗口内的局部熵值
+        # Calculate the local entropy difference at time step t
+        local_entropy_window = step_entropy[sum_t - w:sum_t]  # Get the local entropy values within the window
         median_local_entropy = torch.median(local_entropy_window) if len(local_entropy_window) > 0 else 0
         delta_t_raw = (step_entropy[-1] - median_local_entropy) / max_entropy
 
 
         # δ_glob = q * arctanh((median(H(X)^{t-w+1:t}) - median(H_{glob}^{<t})) / (max_entropy))
-        # 计算全局熵差
+        # Calculate the global entropy difference.
         median_entropy_window_t = torch.median(step_entropy[sum_t - w + 1:sum_t+1])
         median_entropy_global = torch.median(global_entropy[:len(step_entropy)]) if len(global_entropy) > 0 else 0
         delta_global_raw = (median_entropy_window_t - median_entropy_global) / max_entropy
 
-    # 确保 delta_global_raw 是张量
+    # Ensure that delta_global_raw is a tensor.
     if isinstance(delta_global_raw, torch.Tensor):
         delta_global_raw_tensor = delta_global_raw.clone().detach()
     else:
         delta_global_raw_tensor = torch.tensor(delta_global_raw, device='cuda')
 
-    # 计算自适应q
+    # Calculate adaptive q
     if len(step_entropy) >1 :
         loc_entropy_change = torch.abs(step_entropy[-1] - step_entropy[-2]) / (step_entropy[-2] + epsilon)
-        loc_entropy_change = torch.clamp(loc_entropy_change, min=0.0, max=1.0)  # 限制在 [0, 1] 的范围内
+        loc_entropy_change = torch.clamp(loc_entropy_change, min=0.0, max=1.0)  # Clip to the range [0, 1]
     else:
         loc_entropy_change = torch.tensor(0.0, device='cuda')
 
@@ -75,51 +74,58 @@ def dynamic_adjustment(global_entropy, step_entropy, max_entropy, sum_t, w=4):
         med_entropy_window_diff = torch.median(step_entropy[sum_t - w + 1:sum_t + 1])
         med_entropy_global_diff = torch.median(global_entropy[:len(step_entropy)]) if len(global_entropy) > 0 else 0
         glob_entropy_diff = torch.abs(med_entropy_window_diff - med_entropy_global_diff) / (med_entropy_window_diff + epsilon)
-        glob_entropy_diff = torch.clamp(glob_entropy_diff, min=0.0, max=1.0)  # 限制在 [0, 1] 的范围内
+        glob_entropy_diff = torch.clamp(glob_entropy_diff, min=0.0, max=1.0)  # Clip to the range [0, 1]
 
     prev_q = 1.0
-    q = prev_q * 0.9 + (1.0 + loc_entropy_change + glob_entropy_diff) * 0.1  # 使用滑动平均来平滑 q`
+    q = prev_q * 0.9 + (1.0 + loc_entropy_change + glob_entropy_diff) * 0.1  # Use moving average to smooth q
 
-    # 使用 arctanh 函数计算最终的 δ_loc 和 δ_glob
+    # Use the arctanh function to calculate the final δ_loc and δ_glob
     delta_t = q * torch.atanh(torch.clamp(delta_t_raw.clone().detach(), -1 + epsilon, 1 - epsilon))
     delta_global = q * torch.atanh(torch.clamp(delta_global_raw_tensor, -1 + epsilon, 1 - epsilon))
-    # 引入参数lambda_k 控制全局熵参数和局部熵参数的比例
+    
+    # Introduce the parameter lambda_k to control the ratio of global entropy parameters to local entropy parameters
+    
     lambda_k = abs(delta_t) / (abs(delta_global)+abs(delta_t)+epsilon)
-    # 根据公式计算 k_t
+    
+    # Calculate k_t according to the formula
+    
     exp_value = torch.exp(lambda_k * delta_t + (1 - lambda_k) * delta_global)
     k_t = 10 * exp_value / (exp_value + 1) + 5
 
-    #计算 Δ_loc^k 和 Δ_glob^k
+    # Calculate δ_loc^k 和 δ_glob^k
     ln_k = torch.log((k_t + epsilon).clone().detach())
     if sum_t < w:
-        # 当时间步小于窗口大小时
+        # When the time step is less than the window size.
         median_entropy_a = median_entropy
         delta_loc_a_raw = (step_entropy[-1] - median_entropy_a) / ln_k
         delta_glob_a_raw = 0
     else:
-        #计算局部熵差
+        #Calculate the local entropy difference.
         local_entropy_window_a  = step_entropy[sum_t - w:sum_t]
         median_local_entropy_a = torch.median(local_entropy_window_a) if len(step_entropy) > 0 else 0
         delta_loc_a_raw = (step_entropy[-1] - median_local_entropy_a) / ln_k
 
-        #计算全局熵差
+        #Calculate the global entropy difference.
         median_entropy_window_a = torch.median(step_entropy[sum_t - w + 1:sum_t+1])
         median_entropy_global_a = torch.median(global_entropy[:len(step_entropy)]) if len(global_entropy) > 0 else 0
         delta_glob_a_raw = (median_entropy_window_a-median_entropy_global_a) / ln_k
 
-    # 确保 delta_global_raw 是张量
+    # Ensure that delta_global_raw is a tensor
     if isinstance(delta_glob_a_raw, torch.Tensor):
         delta_glob_a_raw_tensor = delta_glob_a_raw.clone().detach()
     else:
         delta_glob_a_raw_tensor = torch.tensor(delta_glob_a_raw, device='cuda')
 
-    #计算最终的 Δ_loc^k 和 Δ_glob^k
+    # Calculate the final δ_loc^k and δ_glob^k.
     delta_t_a = q * torch.atanh(torch.clamp(delta_loc_a_raw.clone().detach(), -1 + epsilon, 1 - epsilon))
     delta_glob_a = q * torch.atanh(torch.clamp(delta_glob_a_raw_tensor, -1 + epsilon, 1 - epsilon))
 
-    #引入参数lambda_a 控制参数比例
+    #Introduce the parameter lambda_a to control the parameter ratio
+    
     lambda_a = abs(delta_t_a) / (abs(delta_glob_a) + abs(delta_t_a) + epsilon)
-    # 根据公式计算 alpha_t
+    
+    # Calculate a_t according to the formula
+    
     exp_value_a = torch.exp(lambda_a * delta_t_a + (1 - lambda_a) * delta_glob_a)
     alpha_t = exp_value_a / (exp_value_a + 1)
 
@@ -127,21 +133,21 @@ def dynamic_adjustment(global_entropy, step_entropy, max_entropy, sum_t, w=4):
 
 
 def apply_degeneration_penalty(probabilities, generated_tokens, alpha_t):
-    """对已生成的 token 应用退化惩罚"""
-    # 确保 probabilities 是一个 PyTorch 张量并且在 GPU 上
+    """Apply degeneration penalty to the already generated tokens"""
+    # Ensure that probabilities is a PyTorch tensor and on the GPU
     if not isinstance(probabilities, torch.Tensor):
         probabilities = torch.tensor(probabilities, device='cuda')
     generated_tokens = torch.tensor(generated_tokens, device='cuda') if not isinstance(generated_tokens,
                                                                                        torch.Tensor) else generated_tokens
 
-    # 获取已生成的 token 的频率
+    # Get the frequency of the already generated tokens
     token_counts = torch.bincount(generated_tokens, minlength=len(probabilities))
 
-    # 对已生成的 token 施加惩罚
+    # Apply a penalty to the already generated tokens
     penalties = alpha_t ** token_counts
     adjusted_probs = probabilities * penalties
 
-    # 归一化概率分布
+    # Normalize the probability distribution
     adjusted_probs = adjusted_probs / torch.sum(adjusted_probs)
 
     return adjusted_probs
