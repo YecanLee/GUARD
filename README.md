@@ -45,7 +45,7 @@ SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True pip install simctg
 ## 🚀 Run Paper Inference Experiments <a href="#top">[Back to Top]</a> <a name="run-paper-inference-experiments-"></a>
 You could choose to run the inference experiments for our proposed method by using one of the following ways:
 
-### Run with huggingface transformers library
+### Run with huggingface transformers library (Unsteadiness, Maintain)
 To run the inference experiments for our proposed method by using the huggingface transformers library, please run the following command:
 ```bash
 conda activate guard
@@ -64,7 +64,7 @@ python llm_exp/llm_iacs.py \
 --model_name mistralai/Mistral-7B-v0.3 \
 ```
 
-### Run with our provided python script
+### Run with our provided python script (Recommend)
 You can also choose to run with a simpler way by using the python script we offered here, notice that the temperature and q initial value are fixed to 0.9 and 1.0 respectively:
 ```bash
 python story_generate.py \
