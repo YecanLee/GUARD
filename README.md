@@ -45,7 +45,7 @@ SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True pip install simctg
 ## 🚀 Run Paper Inference Experiments <a href="#top">[Back to Top]</a> <a name="run-paper-inference-experiments-"></a>
 You could choose to run the inference experiments for our proposed method by using one of the following ways:
 
-### Run with huggingface transformers library (Unsteadiness, Maintain)
+### Run with huggingface transformers library
 To run the inference experiments for our proposed method by using the huggingface transformers library, please run the following command:
 ```bash
 conda activate guard
