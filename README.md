@@ -19,6 +19,7 @@ This repo contains the official implementation of our paper __"Global Uncertaint
 ## 📖 Table of Contents <a href="#top">[Back to Top]</a>
 
 - [Download Pre-generated Dataset](#Download-Pre-generated-Dataset-)
+- [Inference Dataset and Generated Texts](#Inference-Dataset-and-Generated-Texts-)
 - [Dependency Installation](#Dependency-installation-)
 - [Run Paper Inference Experiments](#Run-Paper-Inference-Experiments-)
 - [Run Benchmark Inference Experiments](#Run-Benchmark-Inference-Experiments-)
@@ -34,6 +35,12 @@ To download the pre-generated dataset used for model comparison in our paper, pl
 pip install gdown
 gdown --folder https://drive.google.com/drive/folders/1Xa1ZtZpqL7bySVEy_Q8fqGjfNN7L-xvG
 ```
+
+## 📄 Inference Dataset and Generated Texts <a href="#top">[Back to Top]</a> <a name="inference-dataset-and-generated-texts-"></a>
+
+Please check the `data` folder for the inference dataset we used for our experiments.
+
+Please check the `Qwen/Qwen2.5-7B` folder for the generated texts we got by using our proposed method `GUARD` in our paper.
 
 
 ## 🛸 Dependency Installation <a href="#top">[Back to Top]</a> <a name="dependency-installation-"></a>
@@ -61,20 +68,19 @@ You could choose to run the inference experiments for our proposed method by usi
 ### Run with huggingface transformers library
 To run the inference experiments for our proposed method by using the huggingface transformers library, please run the following command:
 ```bash
-conda activate guard
-pip uninstall transformers
-cd transformers
-pip install -e .
-cd ..
+python tf_story_generate.py \
+--model_name Qwen/Qwen2.5-7B \
+--w 7 \
+--dataset_name wikitext \
+```
 
-python llm_exp/llm_iacs.py \
---dataset wikitext \
---q 1.0 \
---temp 0.9 \
---save_file iacs \
---save_path_prefix IACS \
---window_size 7 \
---model_name mistralai/Mistral-7B-v0.3 \
+We also provide a simple script for testing our proposed method with `transformers` library, please run the following command:
+```bash
+python tf_example.py \
+--model_name Qwen/Qwen2.5-7B \
+--prompt YOUR_OWN_PROMPT \
+--w 7 \
+--max_new_tokens 256 \
 ```
 
 ### Run with our provided python script
@@ -82,7 +88,7 @@ You can also choose to run with a simpler way by using the python script we offe
 ```bash
 python story_generate.py \
 --model_name mistralai/Mistral-7B-v0.3 \
---window_size 7 \
+--w 7 \
 --dataset_name wikitext \
 ```
 
