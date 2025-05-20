@@ -36,11 +36,13 @@ pip install gdown
 gdown --folder https://drive.google.com/drive/folders/1Xa1ZtZpqL7bySVEy_Q8fqGjfNN7L-xvG
 ```
 
-## 📄 Inference Dataset and Generated Texts <a href="#top">[Back to Top]</a> <a name="inference-dataset-and-generated-texts-"></a>
+## 📄 Inference Dataset, Generated Texts and Evaluation Results <a href="#top">[Back to Top]</a> <a name="inference-dataset-and-generated-texts-"></a>
 
 Please check the `data` folder for the inference dataset we used for our experiments.
 
 Please check the `Qwen/Qwen2.5-7B` folder for the generated texts we got by using our proposed method `GUARD` in our paper.
+
+Please check the `evaluation_results` folder for the human and LLM evaluation results.
 
 
 ## 🛸 Dependency Installation <a href="#top">[Back to Top]</a> <a name="dependency-installation-"></a>
