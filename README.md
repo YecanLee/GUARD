@@ -83,8 +83,8 @@ python story_generate.py \
 
 We compared 5 different decoding methods with our proposed method in our paper, those are: **[Contrastive Search](https://arxiv.org/abs/2210.14140), [Top-k Sampling](https://arxiv.org/pdf/1805.04833), [Top-p Sampling](https://arxiv.org/abs/1904.09751), [Beam Search](https://arxiv.org/abs/1702.01806) and [Temperature Scaling](https://arxiv.org/abs/1706.04599)**. We compare those methods with the following hyperparameter combinations:
 - **Contrastive Search**: alpha=0.6, k=10
-- **Top-k Sampling**: k=10
-- **Top-p Sampling**: p=0.9
+- **Top-k Sampling**: k=50
+- **Top-p Sampling**: p=0.95
 - **Temperature Scaling**: temperature=0.9
 
 We run the decoding methods on the following 6 models:
