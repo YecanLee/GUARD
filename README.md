@@ -12,6 +12,7 @@
 - [Run Benchmark Inference Experiments](#Run-Benchmark-Inference-Experiments-)
 - [Benchmark Decoding Methods](#Benchmark-Decoding-Methods-)
   - [Measure Diversity, Generation Length and MAUVE Score](#Measure-Diversity,-Generation-Length-and-MAUVE-Score-)
+- [LLM as Judge](#LLM-as-Judge-)
 - [Enhancements](#Enhancements-)
 - [License](#License-)
 - [Contributions](#Contributions-)
@@ -171,6 +172,22 @@ To measure the diversity, generation length and MAUVE score of the generated tex
 bash scripts/measure_single_mauve.sh YOUR_TEST_PATH
 bash scripts/measure_single_coherence.sh YOUR_TEST_PATH
 ```
+
+## 🧑🏿‍⚖️ LLM as Judge <a href="#top">[Back to Top]</a> <a name="llm-as-judge-"></a>
+We have extended the LLM-as-a-judge evaluation, using GPT4 to evaluate 120 pairwise comparisons of GUARD vs. Top-k sampling (k = 50) and GUARD vs. Top-p sampling (p = 0.95).
+
+The results are shown in the following table:
+
+| Metric | GUARD vs ACS | | | GUARD vs top-k | | | GUARD vs top-p | | |
+|--------|-------------|---|---|---------------|---|---|---------------|---|---|
+|        | *GUARD Wins* | *ACS Wins* | *Tie* | *GUARD Wins* | *Top-k Wins* | *Tie* | *GUARD Wins* | *Top-p Wins* | *Tie* |
+| *Overall* | *34.3* | 30.6 | 35.1 | *65.8* | 17.5 | 16.7 | *49.2* | 34.2 | 16.7 |
+| Fluency | *40.7* | 35.3 | 24.0 | *76.7* | 23.3 | 0.0 | *56.7* | 43.3 | 0.0 |
+| Coherence | *40.7* | 34.0 | 25.3 | *80.0* | 20.0 | 0.0 | *58.3* | 41.7 | 0.0 |
+| Factuality | 4.0 | 10.0 | *86.0* | 0.0 | 0.0 | *100.0* | 0.0 | 0.0 | *100.0* |
+| Informativeness | *40.0* | 35.3 | 24.7 | *78.3* | 21.7 | 0.0 | *60.0* | 40.0 | 0.0 |
+| Interestingness | *40.0* | 34.7 | 25.3 | *80.0* | 20.0 | 0.0 | *60.0* | 40.0 | 0.0 |
+| Story Development | *40.7* | 34.0 | 25.3 | *80.0* | 20.0 | 0.0 | *60.0* | 40.0 | 0.0 |
 
 ## 💪 Enhancements <a href="#top">[Back to Top]</a> <a name="enhancements-"></a>
 Generation could likely be speed-up by:
