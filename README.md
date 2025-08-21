@@ -14,6 +14,7 @@
   - [Measure Diversity, Generation Length and MAUVE Score](#Measure-Diversity,-Generation-Length-and-MAUVE-Score-)
 - [LLM as Judge](#LLM-as-Judge-)
 - [Enhancements](#Enhancements-)
+- [Citation](#Citation-)
 - [License](#License-)
 - [Contributions](#Contributions-)
 
@@ -192,6 +193,19 @@ The results are shown in the following table:
 ## 💪 Enhancements <a href="#top">[Back to Top]</a> <a name="enhancements-"></a>
 Generation could likely be speed-up by:
 - [x] using `torch.compile` in PyTorch 2.0, we implemented this by using `max_autotune` mode in the generation scripts, you may need to modify the `torch.compile` codes to fit your needs.  
+
+## Citation <a href="#top">[Back to Top]</a> <a name="Citation-"></a>
+If you use our code, please cite
+```bash
+@inproceedings{
+GUARD2025,
+title={{GUARD}: Glocal Uncertainty-Aware Robust Decoding for Efficient Hyperparameter-Free Text Generation},
+author={Yuanhao Ding and Esteban Garces Arias and Meimingwei Li and Julian Rodemann and Matthias A{\ss}enmacher and Danlu Chen and Gaojuan Fan and Christian Heumann and Chongsheng ZHANG},
+booktitle={Findings of the Association for Computational Linguistics: {EMNLP} 2025, Suzhou, China, November 5-9, 2025},
+publisher= {Association for Computational Linguistics},
+year={2025}
+}
+
 
 **TF32 Note (important for Ampere, Hopper, and other recent NVIDIA GPUs users).**    
 When we ran the above generation scripts, TF32 matmuls were disabled per PyTorch's defaults.    
