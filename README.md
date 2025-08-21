@@ -194,7 +194,7 @@ The results are shown in the following table:
 Generation could likely be speed-up by:
 - [x] using `torch.compile` in PyTorch 2.0, we implemented this by using `max_autotune` mode in the generation scripts, you may need to modify the `torch.compile` codes to fit your needs.  
 
-## Citation <a href="#top">[Back to Top]</a> <a name="Citation-"></a>
+## 🔥 Citation <a href="#top">[Back to Top]</a> <a name="Citation-"></a>
 If you use our code, please cite
 ```bash
 @inproceedings{
