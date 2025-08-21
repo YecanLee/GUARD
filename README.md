@@ -1,4 +1,4 @@
-## GUARD: Glocal Uncertainty-Aware Robust Decoding <br><sub>Yuanhao Ding*, Esteban Garces Arias*, Meimingwei Li*, Julian Rodemann, Matthias Aßenmacher, Danlu Chen, Gaojuan Fan, Christian Heumann, Chongsheng Zhang. GUARD: Glocal Uncertainty-Aware Robust Decoding for Optimal Text Generation.  Findings of the Association for Computational Linguistics: EMNLP (Findings) 2025. </sub>
+## GUARD: Glocal Uncertainty-Aware Robust Decoding for Optimal Text Generation <br><sub>Yuanhao Ding*, Esteban Garces Arias*, Meimingwei Li*, Julian Rodemann, Matthias Aßenmacher, Danlu Chen, Gaojuan Fan, Christian Heumann, Chongsheng Zhang. GUARD: Glocal Uncertainty-Aware Robust Decoding for Optimal Text Generation.  Findings of the Association for Computational Linguistics: EMNLP (Findings) 2025. </sub>
 ## [Project Page](placeholder) | Run Analysis Baseline [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](placeholder)
 
 
