@@ -205,7 +205,7 @@ booktitle={Findings of the Association for Computational Linguistics: {EMNLP} 20
 publisher= {Association for Computational Linguistics},
 year={2025}
 }
-
+```
 
 **TF32 Note (important for Ampere, Hopper, and other recent NVIDIA GPUs users).**    
 When we ran the above generation scripts, TF32 matmuls were disabled per PyTorch's defaults.    
