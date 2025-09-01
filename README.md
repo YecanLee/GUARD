@@ -1,4 +1,4 @@
-## GUARD: Glocal Uncertainty-Aware Robust Decoding for Effective and Efficient Text Generation <br><sub>Yuanhao Ding*, Esteban Garces Arias*, Meimingwei Li*, Julian Rodemann, Matthias Aßenmacher, Danlu Chen, Gaojuan Fan, Christian Heumann, Chongsheng Zhang. GUARD: Glocal Uncertainty-Aware Robust Decoding for Effective and Efficient Text Generation.  Findings of the Association for Computational Linguistics: EMNLP 2025. </sub>
+## GUARD: Glocal Uncertainty-Aware Robust Decoding for Effective and Efficient Open-Ended Text Generation <br><sub>Yuanhao Ding*, Esteban Garces Arias*, Meimingwei Li*, Julian Rodemann, Matthias Aßenmacher, Danlu Chen, Gaojuan Fan, Christian Heumann, Chongsheng Zhang. GUARD: Glocal Uncertainty-Aware Robust Decoding for Effective and Efficient Text Generation.  Findings of the Association for Computational Linguistics: EMNLP 2025. </sub>
 ## [Project Page](placeholder) | Run Analysis Baseline [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](placeholder)
 
 
@@ -199,7 +199,7 @@ If you use our code, please cite
 ```bash
 @inproceedings{
 GUARD2025,
-title={{GUARD}: Glocal Uncertainty-Aware Robust Decoding for Effective and Efficient Text Generation},
+title={{GUARD}: Glocal Uncertainty-Aware Robust Decoding for Effective and Efficient Open-Ended Text Generation},
 author={Yuanhao Ding and Esteban Garces Arias and Meimingwei Li and Julian Rodemann and Matthias A{\ss}enmacher and Danlu Chen and Gaojuan Fan and Christian Heumann and Chongsheng ZHANG},
 booktitle={Findings of the Association for Computational Linguistics: {EMNLP} 2025, Suzhou, China, November 5-9, 2025},
 publisher= {Association for Computational Linguistics},
